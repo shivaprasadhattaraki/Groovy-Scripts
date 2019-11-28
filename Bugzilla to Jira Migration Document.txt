@@ -1,0 +1,53 @@
+                      
+
+           Bugzilla To JIRA Migration
+
+
+1) Create all projects in JIRA which are there in Bugzilla with same configurations(Workflows screen issuetype).
+
+2) Create Customfield Bugzilla-Id and C-type(issuetype reference) in Jira.
+
+3) Create the resolution in jira same as Bugzilla.
+
+4) Create the Priority scheme as same as Bugzilla.
+
+5) Create one group and give access to all internal and external projects(metricstream id)
+
+6) Give acess individual customers to particular projects.
+
+7) For this we need to create separate permission Schemes for all external Projects.
+
+
+          Jira and Bugzilla Setup (database)
+
+1) Bugzilla URL:  https://bugzilla.metricstream.com/bugzilla/
+
+2) Bugzilla Login: shivaprasad.h
+
+3) Bugzilla Password: ************
+
+4) Hostname : 172.27.0.51
+
+5) Database : Bugs
+
+6) Username : root
+
+7) Password : metricstream123
+
+
+   
+
+
+                    Certificate installation
+
+
+
+ To resolve Bugzilla - Jira integration issue, you need to import the Bugzilla CA cert in to Jira.
+
+ attached are the latest Bugzilla cert, please import the same into Jira using below command.
+
+ Note: change path accordingly.
+
+ 
+
+ keytool -import -alias bugzilla.metricstream.com -keystore "/Data/jira-install/jre/lib/security/cacerts" -file bugzill.cer

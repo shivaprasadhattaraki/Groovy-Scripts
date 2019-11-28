@@ -1,0 +1,58 @@
+CROWD NEW SETUP
+
+
+1)  Install crowd by untaring tar.gz file
+
+		tar -xvzf  crowd.tar.gz file
+
+2)  Uncomment jira-home in 
+    
+    /atlassian-crowd-3.3.4/crowd-webapp/WEB-INF/classes/crowd-init.properties
+
+     crowd.home=/Data/crowd-home
+
+3)  Install postgresql
+
+     COMMANDS
+
+		rpm -Uvh http://yum.postgresql.org/9.6/redhat/rhel-7-x86_64/pgdg-redhat96-9.6-3.noarch.rpm
+
+		yum install postgresql96-server postgresql96
+
+		/usr/pgsql-9.6/bin/postgresql96-setup initdb
+
+		systemctl start postgresql-9.6
+		systemctl enable postgresql-9.6
+
+		su - postgres
+
+
+
+4)		Create DAtabase and user with password
+
+
+		CREATE USER crowdstg WITH ENCRYPTED PASSWORD 'crowdstg';
+
+		CREATE DATABASE crowdstgdb WITH ENCODING 'UNICODE' LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE template0;
+
+		GRANT ALL PRIVILEGES ON DATABASE crowdstgdb TO crowdstg
+
+		\du  \l
+
+		Show hba file:
+
+		pg_hba.conf  Change IPV4 configurations  change ident and peer to trust or md5
+
+
+5)		start crowd and  setup database connection.
+
+6)              Add new Applicationin crowd with JIRA.
+		
+		Add Directories.
+
+7)              Import users from JIRA.
+
+8)		Jdbc URL:     jdbc:postgresql://10.100.4.209/jirastagdb?autoReconnect=true
+       		JDBC Driver:  org.postgresql.Driver
+		Username:     rndjirastg
+		Password:     rndjirastg
