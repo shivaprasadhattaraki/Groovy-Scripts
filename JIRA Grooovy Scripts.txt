@@ -1,0 +1,184 @@
+
+padiconfl: 10.102.5.23
+
+
+
+mstream
+jira@123
+
+conflkb
+confl*123
+
+Databse  Prod: 10.102.7.21   Username:jiraroot  pass: root*123 
+
+ Prod readonly user: jiraread pas: J1r@read  
+
+       
+Database Stag: 10.100.2.22   Username:stgdbuser pass: stgdbuser
+
+
+padijira user
+
+
+shivaprasad.h  prasad143&& Crowd user
+shiv           123         Internal user
+
+
+
+Confluence user
+
+shivaprasad.h  prasad143&&  Crowd user
+
+shiv           admin       crowduser
+
+
+
+
+
+
+
+FETCH members in particular group
+
+        import com.atlassian.jira.component.ComponentAccessor
+
+        def groupManager = ComponentAccessor.getGroupManager()
+        groupManager.getUsersInGroup("jira-users")
+		
+		
+
+
+		
+		
+		
+		
+		
+		Deactivate inactive users who are not logged in 300 days.
+
+
+       	import com.atlassian.crowd.embedded.api.CrowdService
+import com.atlassian.crowd.embedded.api.UserWithAttributes
+import com.atlassian.crowd.embedded.impl.ImmutableUser
+import com.atlassian.jira.bc.user.UserService
+import com.atlassian.jira.bc.user.search.UserSearchParams
+import com.atlassian.jira.bc.user.search.UserSearchService
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.security.groups.GroupManager
+import com.atlassian.jira.user.ApplicationUser
+import com.atlassian.jira.user.ApplicationUsers
+import com.atlassian.jira.user.util.UserUtil
+
+int numOfDays = 300 // Number of days the user was not logged in
+Date dateLimit = (new Date())- numOfDays
+
+
+GroupManager groupManager = ComponentAccessor.getGroupManager();
+
+userList.findAll{it.isActive()}.each {
+
+    if(groupManager.isUserInGroup(it.getName(),"jira-administrators"))
+        return;
+
+    UserWithAttributes user = crowdService.getUserWithAttributes(it.getName())
+
+    String lastLoginMillis = user.getValue('login.lastLoginMillis')
+    if (lastLoginMillis?.isNumber()) {
+        Date d = new Date(Long.parseLong(lastLoginMillis))
+        if (d.before(dateLimit)) {
+            updateUser = ApplicationUsers.from(ImmutableUser.newUser(user).active(false).toUser())
+            updateUserValidationResult = userService.validateUpdateUser(updateUser)
+            if (updateUserValidationResult.isValid()) {
+                userService.updateUser(updateUserValidationResult)
+                log.info "Deactivated ${updateUser.name}"
+                count++;
+            } else {
+                log.error "Update of ${user.name} failed: ${updateUserValidationResult.getErrorCollection().getErrors().entrySet().join(',')}"
+            }
+        }
+    }
+}
+
+"${count} users deactivated.\n"	
+
+
+
+
+
+
+
+
+ AUTO add Watchers in isuue.
+ 
+ 
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.user.util.UserManager
+import com.atlassian.jira.issue.watchers.WatcherManager
+
+def watcherManager = ComponentAccessor.getWatcherManager()
+def userManager = ComponentAccessor.getUserManager()
+def issue = event.getIssue()
+def user =  userManager.getUserByName("sneha.k")
+def user1 = userManager.getUserByName("sathyamurthyc")
+def user2 = userManager.getUserByName("ponit.kaur")
+def user3 = userManager.getUserByName("vineesh")
+def user4 = userManager.getUserByName("venkatarangam.s")
+def user5 = userManager.getUserByName("gandam.kumar")
+
+
+
+if (issue.getIssueType().getName() == "Instance Decommission") watcherManager.startWatching(user, issue)
+if (issue.getIssueType().getName() == "Instance Decommission") watcherManager.startWatching(user1, issue)
+if (issue.getIssueType().getName() == "Instance Decommission") watcherManager.startWatching(user2, issue)
+if (issue.getIssueType().getName() == "Instance Decommission") watcherManager.startWatching(user3, issue)
+if (issue.getIssueType().getName() == "Instance Decommission") watcherManager.startWatching(user4, issue)
+if (issue.getIssueType().getName() == "Instance Decommission") watcherManager.startWatching(user5, issue)
+
+
+
+
+
+
+
+
+Email notification POST FUNCTION
+
+Subject: <%print(issue.get("issuekey"))%> Standard RFC issue has been Created
+
+Html Body:  <%print(issue.get("reporter")?.displayName)%> has created an RFC Predefined issue. If needed, you can ask for additional information. Please click the link below.
+
+Cloud to server problem. need to execute query after connecting JIRA with Database.
+
+ALTER TABLE os_historystep ALTER COLUMN caller TYPE character varying(255);
+
+
+If the following Groovy script doesn't return true, the condition will fail:
+if(issue.getAsString("Cloud Manager"))
+return true;
+else
+return false;
+
+             Assign issue to user automatically
+
+import com.atlassian.jira.component.ComponentAccessor
+
+def issueManager = ComponentAccessor.getIssueManager()
+def issueService = ComponentAccessor.getIssueService()
+def userManager = ComponentAccessor.getUserManager()
+
+def user = userManager.getUserByName("tbas")
+
+def issue = issueManager.getIssueObject("HW_TEST-64")
+
+def validateAssignResult = issueService.validateAssign(user, issue.id, issue.reporterId)
+issueService.assign(user, validateAssignResult)
+
+
+
+
+
+
+
+
+
+
+
+
