@@ -1,0 +1,88 @@
+
+   Demo server
+
+49.248.222.138
+
+
+SSH User :  amrut 
+Password :  3Qu3ST123
+
+
+
+We need to add KeyAlias = confluence.myntracorp.com  in Confluence server.xml  /opt/atlassian/confluence/conf/server.xml
+
+
+We need to add packet size in  cd /etc/my.cnf 
+
+/opt/atlassian/jira/bin/setenv.sh  We need to increase JVM Memory.
+
+We need to Check Trouble shooting and support tools errors.
+ 
+ 
+Confluence group membership fetching query
+                                                
+mysql -u root -pmyntrajc123 confluence -e " SELECT d.directory_name,
+d.active,
+d.id AS DirectoryID,
+d.directory_name,
+d.directory_type,
+u.id AS UserID,
+u.user_name,
+g.id AS GroupID,
+g.group_name
+FROM
+cwd_user u
+JOIN cwd_directory d
+ON
+u.directory_id = d.id
+JOIN cwd_membership m
+ON
+u.id = m.child_user_id
+JOIN cwd_group g
+ON
+g.id = parent_id
+ORDER BY u.user_name ASC, d.id, g.group_name ASC;" >> confluence123.csv
+
+ 
+SSL COmmands
+
+opt/atlassian/jira/jre/bin
+
+openssl pkcs12 -export -in /home/upgradeuser/myntracorp.crt -inkey /home/upgradeuser/myntracorp.key -name jira.myntracorp.com -out jira.p12
+
+
+./keytool -alias jira.myntracorp.com  -importkeystore -srckeystore jira.p12 \
+       -srcstoretype PKCS12 \
+       -destkeystore jira.jks \
+       -deststoretype JKS                                         
+
+
+./keytool -import -alias jira.myntracorp.com -keystore /opt/atlassian/jira/jre/lib/security/cacerts -file /home/upgradeuser/myntracorp.crt
+
+
+
+
+su – postgres
+
+psql
+
+
+
+
+
+
+
+
+
+update user password
+
+update cwd_user set credential='uQieO/1CGMUIXXftw3ynrsaYLShI+GTcPS4LdUGWbIusFvHPfUzD7CZvms6yMMvA8I7FViHVEqr6Mj4pCLKAFQ==' where user_name='shiv';
+
+password : sphere
+
+
+
+
+Cli command for LDAP 
+
+jira -a runFromCsv --file new.csv --continue --common "--action addUserToGroup --autoGroup --continue"

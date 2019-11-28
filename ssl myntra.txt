@@ -1,0 +1,79 @@
+openssl pkcs12 -export -in /Data/server.crt -inkey /Data/server.key -name padicrowdstg.metricstream.com -out jira.p12
+
+
+
+1) ./keytool -genkey -alias jira -keyalg RSA -keystore Data/jira-install/jre/bin/jira.jks
+
+
+
+
+keytool -import -alias rootCA -keystore Data/jira-install/jre/bin/jira.jks -trustcacerts -file intermediate.crt
+
+
+
+
+/home/upgradeuser/certs
+
+
+
+
+
+./keytool -alias  padicrowdstg.metricstream.com -importkeystore -srckeystore jira.p12 \
+       -srcstoretype PKCS12 \
+       -destkeystore jira.jks \
+       -deststoretype JKS
+
+
+
+./keytool -import -alias padicrowdstg.metricstream.com -keystore /Data/jira-install/jre/lib/security/cacerts -file /Data/server.crt
+
+/opt/atlassian/jira/jre/bin
+
+
+keytool -import -alias rootCA -keystore Data/jira-install/jre/bin/jira.jks -trustcacerts -file intermediate.crt
+
+
+
+keyAlias=“padicrowdstg.metricstream.com” keystoreFile=“/Data/jira-install/jre/bin/jira.jks” keystorePass=“changeit” keystoreType=“JKS”/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+              maxHttpHeaderSize="8192" SSLEnabled="true"
+              maxThreads="150" minSpareThreads="25"
+              enableLookups="false" disableUploadTimeout="true"
+              acceptCount="100" scheme="https" secure="true"
+              sslEnabledProtocols="TLSv1.2,TLSv1.3"
+              clientAuth="false" useBodyEncodingForURI="true"
+              keyAlias="jira" keystoreFile="Data/jira-install/jre/bin/jira.jks" keystorePass="changeit" keystoreType="JKS"/>
+
+
+
+
+
+
+
+openssl pkcs12 -export -in /Data/server.crt -inkey /Data/server.key -out /Data -name tomcat -CAfile /Data/intermediate.crt -caname root
+
+
+./keytool -importkeystore -deststorepass changeit -destkeypass changeit -destkeystore tomcatkeystorefile -srckeystore keystorefile -srcstoretype PKCS12 -srcstorepass changeit -alias tomcat
+
+tomcatkeystorefile
+
+
+
+
+<Connector port="8080" relaxedPathChars="[]|" relaxedQueryChars="[]|{}^&#x5c;&#x60;&quot;&lt;&gt;"
+                   maxThreads="150" minSpareThreads="25" connectionTimeout="20000" enableLookups="false"
+                   maxHttpHeaderSize="8192" protocol="HTTP/1.1" useBodyEncodingForURI="true" redirectPort="8443"
+                   acceptCount="100" disableUploadTimeout="true" bindOnInit="false"/>
