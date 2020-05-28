@@ -1,0 +1,24 @@
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.security.roles.ProjectRoleManager
+
+import 
+static com.atlassian.jira.issue.IssueFieldConstants.ISSUE_TYPE
+
+def projectRoleManager = ComponentAccessor.getComponent(ProjectRoleManager)
+def allIssueTypes = ComponentAccessor.constantsManager.allIssueTypeObjects
+
+def user = ComponentAccessor.jiraAuthenticationContext.loggedInUser
+def issueTypeField = getFieldById(ISSUE_TYPE)
+
+def remoteUsersRoles = projectRoleManager.getProjectRoles(user, issueContext.projectObject)*.name
+def availableIssueTypes = []
+
+if ("Users" in remoteUsersRoles) {
+    availableIssueTypes.addAll(allIssueTypes.findAll { it.name in ["Query", "General Request"] })
+}
+
+if ("Developers" in remoteUsersRoles) {
+    availableIssueTypes.addAll(allIssueTypes.findAll { it.name in ["Bug", "Task", "New Feature"] })
+}
+
+issueTypeField.setFieldOptions(availableIssueTypes)
