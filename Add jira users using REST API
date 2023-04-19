@@ -1,0 +1,135 @@
+import requests
+# Jira instance URL
+jira_url = "https://jdjira.justdial.com"
+# Jira API endpoint for creating a user
+user_create_endpoint = "/rest/api/2/user"
+# Jira authentication credentials
+auth = ("Username", "Password")
+​# User details for multiple users
+users = [
+    {
+    "name": "ajay.p1@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "ajay.p1@justdial.com",
+    "displayName": "Ajay P1"
+},
+{
+    "name": "prakash.jaiswal@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "prakash.jaiswal@justdial.com",
+    "displayName": "prakash Jaiswal"
+},
+{
+    "name": "lalit.sharlawar@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "lalit.sharlawar@justdial.com",
+    "displayName": "Lalit Sharlawar"
+},
+{
+    "name": "sneh.upadhyay@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "sneh.upadhyay@justdial.com",
+    "displayName": "Sneh Upadhyay"
+},
+{
+    "name": "yash.devkota@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "yash.devkota@justdial.com",
+    "displayName": "yash Devkota"
+},
+{
+    "name": "prathibha.p1@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "prathibha.p1@justdial.com",
+    "displayName": "Prathibha P1"
+},
+{
+    "name": "subrat.srichandan@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "subrat.srichandan@justdial.com",
+    "displayName": "Subrat Srichandan"
+},
+{
+    "name": "niraj.ray@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "niraj.ray@justdial.com",
+    "displayName": "Niraj Ray"
+},
+{
+    "name": "muzamil.dar@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "muzamil.dar@justdial.com",
+    "displayName": "Muzamil Dar"
+},
+{
+    "name": "owais.rafiq@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "owais.rafiq@justdial.com",
+    "displayName": "Owais Rafiq"
+},
+{
+    "name": "peter.ganta@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "peter.ganta@justdial.com",
+    "displayName": "Peter Ganta"
+},
+{
+    "name": "jitendra.nayak@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "jitendra.nayak@justdial.com",
+    "displayName": "Jitendra Nayak"
+},
+{
+    "name": "deepak17@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "deepak17@justdial.com",
+    "displayName": "Deepak"
+},
+{
+    "name": "saket.parashar@justdial.com",
+    "password": "Ju$tDi@l",
+    "emailAddress": "saket.parashar@justdial.com",
+    "displayName": "Saket Parashar"
+}
+]
+​
+# Loop through the list of users and create each one using the API
+for user in users:
+    response = requests.post(
+        f"{jira_url}{user_create_endpoint}",
+        auth=auth,
+        json=user
+    )
+    if response.status_code == 201:
+        print(f"User {user['name']} created successfully")
+    else:
+        print(f"Error creating user {user['name']}: {response.content}")_aQ4T-aqkBs50D-8jKhtsuIGYK8mYe9BxbXbvQdXRaC5Ls5uGx7Xo-_sm5CQU4dXgc6dpCAo_FLxQGf-QDrQqUGUJcg7-kKMFK1OnklybEjN499U8fysk_yBvHGgQJ5a5w9Av8prIuAZTjUhz0IYK9vChgKatxj8HWpI=C5FA6E53"
+
+# Set the Jira Cloud REST API endpoint for adding users to a group
+ADD_USERS_TO_GROUP_ENDPOINT = "/rest/api/2/group/user"
+
+# Define the list of Jira usernames to add to the group
+usernames = ["ajay.p1@justdial.com", "rounak.bhowmick@go-yubi.com", "raveena.solomon@go-yubi.com","rishabh.jindal@go-yubi.com"]
+
+# Loop through the list of usernames and add each one to the group
+for username in usernames:
+    # Set the Jira Cloud REST API endpoint for adding a user to a group
+    url = JIRA_BASE_URL + ADD_USERS_TO_GROUP_ENDPOINT
+    
+    # Set the JSON payload for the REST API request
+    payload = {"groupname": GROUP_NAME, "name": username}
+    
+    # Set the HTTP headers for the REST API request
+    headers = {"Accept": "application/json"}
+    
+    # Set the HTTP authentication for the REST API request
+    auth = (JIRA_USERNAME, JIRA_API_TOKEN)
+    
+    # Send the REST API request to add the user to the group
+    response = requests.post(url, data=json.dumps(payload), headers=headers, auth=auth)
+    
+    # Check the response status code to make sure the user was added successfully
+    if response.status_code == requests.codes.ok:
+        print(f"{username} added to group {GROUP_NAME} successfully.")
+    else:
+        print(f"Failed to add {username} to group {GROUP_NAME}. Error message: {response.text}")
