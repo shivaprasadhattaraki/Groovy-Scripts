@@ -1,41 +1,4 @@
 
-padiconfl: 10.102.5.23
-
-
-
-mstream
-jira@123
-
-conflkb
-confl*123
-
-Databse  Prod: 10.102.7.21   Username:jiraroot  pass: root*123 
-
- Prod readonly user: jiraread pas: J1r@read  
-
-       
-Database Stag: 10.100.2.22   Username:stgdbuser pass: stgdbuser
-
-
-padijira user
-
-
-shivaprasad.h  prasad143&& Crowd user
-shiv           123         Internal user
-
-
-
-Confluence user
-
-shivaprasad.h  prasad143&&  Crowd user
-
-shiv           admin       crowduser
-
-
-
-
-
-
 
 FETCH members in particular group
 
