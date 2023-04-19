@@ -1,6 +1,6 @@
 curl \
    -D- \
-   -u Testbar@metricstream.com:testbar \
+   -u Testbar@m.com:testbar \
    -X POST \
    -H "Content-Type: application/json" \
    --data '{"jql":"project = PADI","startAt":0,"maxResults":2,"fields":["id","key","summary","assignee","reporter"]}' \
