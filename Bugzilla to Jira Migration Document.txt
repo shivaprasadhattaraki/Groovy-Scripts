@@ -20,19 +20,19 @@
 
           Jira and Bugzilla Setup (database)
 
-1) Bugzilla URL:  https://bugzilla.metricstream.com/bugzilla/
+1) Bugzilla URL:  
 
-2) Bugzilla Login: shivaprasad.h
+2) Bugzilla Login: 
 
-3) Bugzilla Password: ************
+3) Bugzilla Password: 
 
-4) Hostname : 172.27.0.51
+4) Hostname : 
 
-5) Database : Bugs
+5) Database : 
 
-6) Username : root
+6) Username : 
 
-7) Password : metricstream123
+7) Password : 
 
 
    
