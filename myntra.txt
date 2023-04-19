@@ -1,11 +1,4 @@
 
-   Demo server
-
-49.248.222.138
-
-
-SSH User :  amrut 
-Password :  3Qu3ST123
 
 
 
@@ -62,7 +55,7 @@ openssl pkcs12 -export -in /home/upgradeuser/myntracorp.crt -inkey /home/upgrade
 
 
 
-su – postgres
+su â€“ postgres
 
 psql
 
